@@ -1,8 +1,9 @@
 // import { SlashCommandBuilder } from "discord.js";
-const { SlashCommandBuilder, TextChannel } = require("discord.js");
+const { SlashCommandBuilder, TextChannel, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
   // Prompts the user to enter a Discord message link
+  // Only works if the user has the "Manage Members" permission, this can be changed to whatever criteria you want
   category: 'utility',
   data: new SlashCommandBuilder()
     .setName("publish")
@@ -11,7 +12,7 @@ module.exports = {
       option
         .setName("message")
         .setDescription("Link for message to publish")
-        .setRequired(true)
+        .setRequired(true).setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     ),
   async execute(interaction) {
     // Find the message string from the interaction
